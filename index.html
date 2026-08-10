@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lumière Studio — Velas artesanales</title>
+<meta name="description" content="Velas artesanales inspiradas en flores, bebidas y pequeños rituales cotidianos. Descubre nuestra primera colección." />
+
+<!-- ==================================================================
+     GOOGLE ANALYTICS 4 (placeholder)
+     Descomenta y reemplaza G-XXXXXXX con tu ID de medición para activar.
+=================================================================== -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXX');
+</script>
+-->
+
+<!-- ==================================================================
+     META PIXEL (placeholder)
+=================================================================== -->
+<!--
+<script>
+  !function(f,b,e,v,n,t,s){...}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', 'TU_PIXEL_ID');
+  fbq('track', 'PageView');
+</script>
+-->
+
+<!-- ==================================================================
+     TIKTOK PIXEL (placeholder)
+=================================================================== -->
+<!--
+<script>
+  !function (w, d, t) {...}(window, document, 'ttq');
+  ttq.load('TU_PIXEL_ID');
+  ttq.page();
+</script>
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-marfil">
+
+<!-- ============================== HEADER ============================== -->
+<header id="site-header" class="site-header">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16 sm:h-20">
+    <span id="brand-name" class="brand-mark"></span>
+
+    <nav id="nav-links" class="hidden md:flex items-center gap-8"></nav>
+
+    <div class="flex items-center gap-3">
+      <a href="#productos" class="btn-outline hidden sm:inline-flex">Descubrir velas</a>
+      <button id="mobile-menu-toggle" class="mobile-menu-btn md:hidden" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav id="mobile-menu" class="mobile-menu md:hidden"></nav>
+</header>
+
+<main>
+
+  <!-- ============================== HERO ============================== -->
+  <section id="inicio" class="hero">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 grid md:grid-cols-2 gap-10 md:gap-14 items-center">
+      <div class="order-2 md:order-1">
+        <p class="section-eyebrow mb-4">Primera colección · próximamente</p>
+        <h1 id="hero-title" class="font-display text-[2.3rem] sm:text-5xl md:text-[3.4rem] leading-[1.08] mb-5"></h1>
+        <p id="hero-subtitle" class="text-taupe text-base sm:text-lg leading-relaxed mb-8 max-w-md"></p>
+        <div class="flex flex-wrap gap-3">
+          <a href="#productos" id="hero-cta-primary" class="btn-primary"></a>
+          <a href="#historia" id="hero-cta-secondary" class="btn-secondary"></a>
+        </div>
+      </div>
+      <div class="order-1 md:order-2">
+        <div class="hero-image-wrap">
+          <img id="hero-image" alt="Vela artesanal — fotografía de producto" />
+          <div class="hero-image-frame"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CATEGORÍAS ============================== -->
+  <section id="colecciones" class="py-20 sm:py-28">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="max-w-lg mb-12 reveal">
+        <p class="section-eyebrow mb-3">Colecciones</p>
+        <h2 class="font-display text-3xl sm:text-4xl">Tres formas de encender un momento.</h2>
+      </div>
+      <div id="category-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- ============================== PRODUCTOS ============================== -->
+  <section id="productos" class="py-20 sm:py-28 bg-beige">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10 reveal">
+        <div class="max-w-lg">
+          <p class="section-eyebrow mb-3">Colección en validación</p>
+          <h2 class="font-display text-3xl sm:text-4xl">Piezas que estamos considerando lanzar.</h2>
+        </div>
+        <p class="text-taupe text-sm max-w-xs">Cuéntanos cuáles te interesan más — eso decide qué producimos primero.</p>
+      </div>
+
+      <div id="product-filters" class="flex flex-wrap gap-2.5 mb-9"></div>
+
+      <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- ============================== PROPUESTA DE VALOR ============================== -->
+  <section class="py-20 sm:py-28">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div id="value-grid" class="grid sm:grid-cols-3 gap-10"></div>
+    </div>
+  </section>
+
+  <!-- ============================== BRAND STORY ============================== -->
+  <section id="historia" class="py-20 sm:py-28 bg-beige">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+      <div class="story-image-wrap reveal">
+        <img id="story-image" alt="Composición editorial de vela artesanal" />
+      </div>
+      <div class="reveal">
+        <p class="section-eyebrow mb-3">Nuestra intención</p>
+        <h2 id="story-title" class="font-display text-3xl sm:text-4xl mb-6"></h2>
+        <div id="story-paragraphs"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== ENCUESTA ============================== -->
+  <section class="py-20 sm:py-28">
+    <div class="max-w-3xl mx-auto px-5 sm:px-8 text-center">
+      <p class="section-eyebrow mb-3">Ayúdanos a decidir</p>
+      <h2 id="poll-title" class="font-display text-3xl sm:text-4xl mb-10"></h2>
+      <div id="poll-options" class="flex flex-col sm:flex-row gap-4"></div>
+      <p id="poll-thanks" class="text-vino text-sm mt-6 hidden"></p>
+    </div>
+  </section>
+
+  <!-- ============================== CTA FINAL ============================== -->
+  <section class="pb-20 sm:pb-28 px-5 sm:px-8">
+    <div class="max-w-4xl mx-auto final-cta-block px-6 sm:px-14 py-14 sm:py-16 text-center">
+      <h2 id="final-cta-title" class="font-display text-3xl sm:text-4xl mb-3"></h2>
+      <p id="final-cta-subtitle" class="opacity-80 text-sm sm:text-base mb-8 max-w-md mx-auto"></p>
+
+      <form id="final-cta-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input id="final-cta-input" class="final-cta-input" type="text" placeholder="Email o WhatsApp" required />
+        <button id="final-cta-btn" type="submit" class="btn-primary whitespace-nowrap"></button>
+      </form>
+      <p id="final-cta-thanks" class="text-sm mt-4 hidden">¡Gracias! Te avisaremos apenas lancemos la colección.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================== FOOTER ============================== -->
+<footer id="footer" class="bg-borgona" style="background:var(--borgona);">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+    <span id="brand-name-footer" class="font-display text-lg" style="color:var(--marfil);"></span>
+    <div class="flex items-center gap-6 text-sm">
+      <a id="footer-instagram" href="#" class="footer-link">Instagram</a>
+      <a id="footer-tiktok" href="#" class="footer-link">TikTok</a>
+      <a id="footer-whatsapp" href="#" class="footer-link">WhatsApp</a>
+      <a id="footer-privacy" href="#" class="footer-link">Privacidad</a>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 pb-8 text-xs" style="color:rgba(245,241,236,0.55);">
+    © <span id="footer-year"></span> — Todos los derechos reservados.
+  </div>
+</footer>
+
+<!-- ============================== MODAL DE INTERÉS ============================== -->
+<div id="interest-modal" class="modal-overlay">
+  <div class="modal-card relative">
+    <button id="modal-close" class="modal-close" aria-label="Cerrar">✕</button>
+
+    <div id="modal-step-form">
+      <p class="section-eyebrow mb-2">"<span id="modal-product-name"></span>"</p>
+      <h3 class="font-display text-2xl mb-2">Estamos preparando nuestra primera colección.</h3>
+      <p class="text-taupe text-sm mb-6">Déjanos saber que te interesa esta vela y te avisaremos cuando esté disponible.</p>
+      <form id="modal-form" class="flex flex-col gap-3">
+        <input id="modal-contact-input" class="modal-input" type="text" placeholder="Email o WhatsApp" required />
+        <button type="submit" class="btn-primary w-full">Avísenme cuando esté disponible</button>
+      </form>
+    </div>
+
+    <div id="modal-step-thanks" class="hidden text-center py-4">
+      <h3 class="font-display text-2xl mb-2">¡Gracias!</h3>
+      <p class="text-taupe text-sm">Tu opinión nos ayuda a decidir qué diseños lanzar primero.</p>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
