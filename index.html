@@ -61,6 +61,22 @@
 
     <div class="flex items-center gap-3">
       <a href="#productos" class="btn-outline hidden sm:inline-flex">Descubrir velas</a>
+
+      <button
+        id="selection-cart-button"
+        class="selection-cart-button"
+        type="button"
+        aria-label="Abrir mi selección de velas"
+        aria-haspopup="dialog"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6.8 8.5h10.4l.8 11H6l.8-11Z" />
+          <path d="M9 9V6.8a3 3 0 0 1 6 0V9" />
+        </svg>
+        <span class="selection-cart-label">Mi selección</span>
+        <span id="selection-cart-count" class="selection-cart-count" aria-live="polite">0</span>
+      </button>
+
       <button id="mobile-menu-toggle" class="mobile-menu-btn md:hidden" aria-label="Abrir menú">
         <span></span><span></span><span></span>
       </button>
@@ -184,6 +200,94 @@
     © <span id="footer-year"></span> — Todos los derechos reservados.
   </div>
 </footer>
+
+<!-- ============================== MI SELECCIÓN ============================== -->
+<div id="selection-cart-overlay" class="selection-cart-overlay" aria-hidden="true">
+  <aside
+    id="selection-cart"
+    class="selection-cart"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="selection-cart-title"
+  >
+    <div class="selection-cart__header">
+      <div>
+        <p class="section-eyebrow mb-1">Lummoria</p>
+        <h2 id="selection-cart-title" class="font-display text-2xl">Tu selección</h2>
+      </div>
+      <button id="selection-cart-close" class="selection-cart__close" type="button" aria-label="Cerrar mi selección">✕</button>
+    </div>
+
+    <div class="selection-cart__body">
+      <div id="selection-cart-step-list">
+        <div id="selection-cart-items" class="selection-cart__items"></div>
+
+        <div id="selection-cart-empty" class="selection-cart__empty hidden">
+          <div class="selection-cart__empty-icon" aria-hidden="true">♡</div>
+          <h3 class="font-display text-xl mb-2">Tu selección está vacía.</h3>
+          <p class="text-taupe text-sm mb-5">Explora nuestra colección y guarda las velas que más te gusten.</p>
+          <button id="selection-cart-explore" class="btn-secondary" type="button">Explorar colección</button>
+        </div>
+
+        <div id="selection-cart-summary" class="selection-cart__summary hidden">
+          <p id="selection-cart-count-label" class="selection-cart__count-label"></p>
+          <button id="selection-cart-interest-btn" class="btn-primary w-full" type="button">Quiero estas velas</button>
+          <p class="selection-cart__note">No es una compra. Solo guardaremos tu interés para avisarte cuando estén disponibles.</p>
+        </div>
+      </div>
+
+      <div id="selection-cart-step-contact" class="hidden">
+        <button id="selection-cart-back" class="selection-cart__back" type="button">← Volver a mi selección</button>
+        <p class="section-eyebrow mb-2">Aviso de disponibilidad</p>
+        <h3 class="font-display text-2xl mb-2">Queremos avisarte cuando estén disponibles.</h3>
+        <p class="text-taupe text-sm mb-5">Guardaremos tu selección junto con el medio por el que prefieres que te contactemos.</p>
+
+        <div id="selection-cart-contact-summary" class="selection-cart__contact-summary"></div>
+
+        <form id="selection-cart-form" class="flex flex-col gap-4" novalidate>
+          <div>
+            <p class="contact-method-label">¿Cómo prefieres que te avisemos?</p>
+            <div class="contact-method-toggle" role="radiogroup" aria-label="Método de contacto para la selección">
+              <button type="button" class="selection-contact-method-pill is-active" data-method="email">Email</button>
+              <button type="button" class="selection-contact-method-pill" data-method="whatsapp">WhatsApp</button>
+            </div>
+          </div>
+
+          <input
+            id="selection-contact-email"
+            class="modal-input"
+            type="email"
+            placeholder="tu@email.com"
+            autocomplete="email"
+          />
+          <input
+            id="selection-contact-whatsapp"
+            class="modal-input hidden"
+            type="tel"
+            placeholder="+57 300 000 0000"
+            value="+57 "
+            autocomplete="tel"
+          />
+
+          <label class="consent-label">
+            <input id="selection-consent" type="checkbox" required />
+            <span>Acepto que Lummoria me contacte para avisarme sobre la disponibilidad y lanzamiento de los productos que seleccioné.</span>
+          </label>
+
+          <p id="selection-cart-form-error" class="form-error hidden"></p>
+
+          <button id="selection-cart-submit" type="submit" class="btn-primary w-full">Avísenme cuando estén disponibles</button>
+        </form>
+      </div>
+
+      <div id="selection-cart-step-thanks" class="selection-cart__thanks hidden">
+        <div class="selection-cart__success-icon" aria-hidden="true">✓</div>
+        <h3 class="font-display text-2xl mb-2">¡Listo! Guardamos tu selección.</h3>
+        <p class="text-taupe text-sm">Te avisaremos cuando estas velas estén disponibles.</p>
+      </div>
+    </div>
+  </aside>
+</div>
 
 <!-- ============================== MODAL DE INTERÉS ============================== -->
 <div id="interest-modal" class="modal-overlay">
