@@ -207,22 +207,58 @@
   /* ---------------------------------------------------------------- */
   /* Modal de interés                                                   */
   /* ---------------------------------------------------------------- */
-  function openInterestModal(product) {
-    const modal = document.getElementById("interest-modal");
-    document.getElementById("modal-product-name").textContent = product.name;
-    modal.dataset.productId = product.id;
-    modal.dataset.productName = product.name;
-    modal.dataset.productCategory = product.category;
-    document.getElementById("modal-step-form").classList.remove("hidden");
-    document.getElementById("modal-step-thanks").classList.add("hidden");
-    document.getElementById("modal-contact-input").value = "";
-    modal.classList.add("open");
-    document.body.classList.add("no-scroll");
-  }
+function openInterestModal(product) {
+  const modal = document.getElementById("interest-modal");
+
+  document.getElementById("modal-product-name").textContent = product.name;
+
+  modal.dataset.productId = product.id;
+  modal.dataset.productName = product.name;
+  modal.dataset.productCategory = product.category;
+
+  document.getElementById("modal-step-form").classList.remove("hidden");
+  document.getElementById("modal-step-thanks").classList.add("hidden");
+
+  const form = modal.querySelector("form");
+  if (form) form.reset();
+
+  modal.classList.add("open");
+  document.body.classList.add("no-scroll");
+}
 
   function closeInterestModal() {
     document.getElementById("interest-modal").classList.remove("open");
     document.body.classList.remove("no-scroll");
+  }
+
+  // Método de contacto activo dentro del modal ("email" | "whatsapp")
+  let modalContactMethod = "email";
+
+  function setModalContactMethod(method) {
+    modalContactMethod = method;
+    document.querySelectorAll(".contact-method-pill").forEach((btn) => {
+      btn.classList.toggle("is-active", btn.dataset.method === method);
+    });
+    document.getElementById("modal-contact-email").classList.toggle("hidden", method !== "email");
+    document.getElementById("modal-contact-whatsapp").classList.toggle("hidden", method !== "whatsapp");
+  }
+
+  function showModalError(message) {
+    const err = document.getElementById("modal-form-error");
+    err.textContent = message;
+    err.classList.remove("hidden");
+  }
+
+  function hideModalError() {
+    const err = document.getElementById("modal-form-error");
+    err.classList.add("hidden");
+    err.textContent = "";
+  }
+
+  function setModalSubmitting(isSubmitting) {
+    const btn = document.getElementById("modal-submit-btn");
+    btn.disabled = isSubmitting;
+    btn.textContent = isSubmitting ? "Enviando…" : "Avísenme cuando esté disponible";
   }
 
   function wireModal() {
@@ -231,16 +267,63 @@
     modal.addEventListener("click", (e) => {
       if (e.target === modal) closeInterestModal();
     });
-    document.getElementById("modal-form").addEventListener("submit", (e) => {
+
+    document.querySelectorAll(".contact-method-pill").forEach((btn) => {
+      btn.addEventListener("click", () => setModalContactMethod(btn.dataset.method));
+    });
+
+    document.getElementById("modal-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const contact = document.getElementById("modal-contact-input").value.trim();
-      if (!contact) return;
+      hideModalError();
+
+      const consentChecked = document.getElementById("modal-consent").checked;
+      const emailValue = document.getElementById("modal-contact-email").value.trim();
+      const whatsappValue = document.getElementById("modal-contact-whatsapp").value.trim();
+      const contactValue = modalContactMethod === "email" ? emailValue : whatsappValue;
+
+      if (!contactValue || (modalContactMethod === "whatsapp" && whatsappValue === "+57")) {
+        showModalError(
+          modalContactMethod === "email"
+            ? "Ingresa un email válido."
+            : "Ingresa tu número de WhatsApp."
+        );
+        return;
+      }
+      if (!consentChecked) {
+        showModalError("Debes aceptar que te contactemos para continuar.");
+        return;
+      }
+
+      setModalSubmitting(true);
+
+      const payload = {
+        lead_type: "product_interest",
+        product_id: modal.dataset.productId,
+        product_name: modal.dataset.productName,
+        category: modal.dataset.productCategory,
+        contact_method: modalContactMethod,
+        email: modalContactMethod === "email" ? emailValue : "",
+        whatsapp: modalContactMethod === "whatsapp" ? whatsappValue : "",
+        consent: true,
+        source: "product_modal",
+      };
+
+      const result = await submitLead(payload);
+      setModalSubmitting(false);
+
+      if (!result.ok) {
+        showModalError(result.error);
+        return;
+      }
+
+      // GA — nunca se envían datos personales (email/whatsapp), sólo el
+      // producto e información de contexto del producto.
       trackEvent("lead_product_interest", {
         product_id: modal.dataset.productId,
         product_name: modal.dataset.productName,
         category: modal.dataset.productCategory,
-        contact_provided: true,
       });
+
       document.getElementById("modal-step-form").classList.add("hidden");
       document.getElementById("modal-step-thanks").classList.remove("hidden");
     });
@@ -298,18 +381,56 @@
   /* CTA final                                                          */
   /* ---------------------------------------------------------------- */
   function renderFinalCta() {
+function renderFinalCta() {
     document.getElementById("final-cta-title").textContent = cfg.finalCta.title;
     document.getElementById("final-cta-subtitle").textContent = cfg.finalCta.subtitle;
     document.getElementById("final-cta-btn").textContent = cfg.finalCta.cta;
 
-    document.getElementById("final-cta-form").addEventListener("submit", (e) => {
+    const form = document.getElementById("final-cta-form");
+    const btn = document.getElementById("final-cta-btn");
+    const errorEl = document.getElementById("final-cta-error");
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const val = document.getElementById("final-cta-input").value.trim();
+      errorEl.classList.add("hidden");
+
+      const input = document.getElementById("final-cta-input");
+      const val = input.value.trim();
       if (!val) return;
-      trackEvent("lead_start", { source: "final_cta", contact_provided: true });
-      document.getElementById("final-cta-form").classList.add("hidden");
+
+      // Detección simple: si contiene @ lo tratamos como email, si no, WhatsApp.
+      const isEmail = val.includes("@");
+
+      btn.disabled = true;
+      const originalLabel = btn.textContent;
+      btn.textContent = "Enviando…";
+
+      const result = await submitLead({
+        lead_type: "general_waitlist",
+        product_id: "",
+        product_name: "",
+        category: "",
+        contact_method: isEmail ? "email" : "whatsapp",
+        email: isEmail ? val : "",
+        whatsapp: isEmail ? "" : val,
+        consent: true,
+        source: "landing_final_cta",
+      });
+
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+
+      if (!result.ok) {
+        errorEl.textContent = result.error;
+        errorEl.classList.remove("hidden");
+        return;
+      }
+
+      trackEvent("lead_start", { source: "final_cta" });
+      form.classList.add("hidden");
       document.getElementById("final-cta-thanks").classList.remove("hidden");
     });
+  }
   }
 
   /* ---------------------------------------------------------------- */

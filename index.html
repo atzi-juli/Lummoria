@@ -113,9 +113,9 @@
         </div>
         <p class="text-taupe text-sm max-w-xs">Cuéntanos cuáles te interesan más — eso decide qué producimos primero.</p>
       </div>
-
+ 
       <div id="product-filters" class="flex flex-wrap gap-2.5 mb-9"></div>
-
+ 
       <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </div>
   </section>
@@ -152,6 +152,7 @@
   </section>
 
   <!-- ============================== CTA FINAL ============================== -->
+   <!--
   <section class="pb-20 sm:pb-28 px-5 sm:px-8">
     <div class="max-w-4xl mx-auto final-cta-block px-6 sm:px-14 py-14 sm:py-16 text-center">
       <h2 id="final-cta-title" class="font-display text-3xl sm:text-4xl mb-3"></h2>
@@ -164,6 +165,7 @@
       <p id="final-cta-thanks" class="text-sm mt-4 hidden">¡Gracias! Te avisaremos apenas lancemos la colección.</p>
     </div>
   </section>
+  -->
 
 </main>
 
@@ -187,26 +189,58 @@
 <div id="interest-modal" class="modal-overlay">
   <div class="modal-card relative">
     <button id="modal-close" class="modal-close" aria-label="Cerrar">✕</button>
-
+ 
     <div id="modal-step-form">
       <p class="section-eyebrow mb-2">"<span id="modal-product-name"></span>"</p>
       <h3 class="font-display text-2xl mb-2">Estamos preparando nuestra primera colección.</h3>
       <p class="text-taupe text-sm mb-6">Déjanos saber que te interesa esta vela y te avisaremos cuando esté disponible.</p>
-      <form id="modal-form" class="flex flex-col gap-3">
-        <input id="modal-contact-input" class="modal-input" type="text" placeholder="Email o WhatsApp" required />
-        <button type="submit" class="btn-primary w-full">Avísenme cuando esté disponible</button>
+ 
+      <form id="modal-form" class="flex flex-col gap-4" novalidate>
+        <div>
+          <p class="contact-method-label">¿Cómo prefieres que te avisemos?</p>
+          <div class="contact-method-toggle" role="radiogroup" aria-label="Método de contacto">
+            <button type="button" class="contact-method-pill is-active" data-method="email">Email</button>
+            <button type="button" class="contact-method-pill" data-method="whatsapp">WhatsApp</button>
+          </div>
+        </div>
+ 
+        <input
+          id="modal-contact-email"
+          class="modal-input"
+          type="email"
+          placeholder="tu@email.com"
+          autocomplete="email"
+        />
+        <input
+          id="modal-contact-whatsapp"
+          class="modal-input hidden"
+          type="tel"
+          placeholder="+57 300 000 0000"
+          value="+57 "
+          autocomplete="tel"
+        />
+ 
+        <label class="consent-label">
+          <input id="modal-consent" type="checkbox" required />
+          <span>Acepto que Lummoria me contacte para avisarme sobre la disponibilidad y lanzamiento de este producto.</span>
+        </label>
+ 
+        <p id="modal-form-error" class="form-error hidden"></p>
+ 
+        <button id="modal-submit-btn" type="submit" class="btn-primary w-full">Avísenme cuando esté disponible</button>
       </form>
     </div>
-
+ 
     <div id="modal-step-thanks" class="hidden text-center py-4">
-      <h3 class="font-display text-2xl mb-2">¡Gracias!</h3>
-      <p class="text-taupe text-sm">Tu opinión nos ayuda a decidir qué diseños lanzar primero.</p>
+      <h3 class="font-display text-2xl mb-2">¡Listo!</h3>
+      <p class="text-taupe text-sm">Te avisaremos cuando esta vela esté disponible.</p>
     </div>
   </div>
 </div>
 
 <script src="js/config.js"></script>
 <script src="js/analytics.js"></script>
+<script src="js/leads.js"></script> 
 <script src="js/main.js"></script>
 </body>
 </html>

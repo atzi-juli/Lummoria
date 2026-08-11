@@ -17,6 +17,13 @@ const SITE_CONFIG = {
     name: "Lummoria", // PLACEHOLDER — nombre / logo de marca
     tagline: "Velas artesanales",
   },
+  // PLACEHOLDER — reemplaza por tu endpoint real de Formspree.
+  // El mismo endpoint se usa tanto para el modal de producto como para
+  // el formulario general; lo que los distingue es el campo "lead_type"
+  // que envía cada uno (ver js/leads.js).
+  formspree: {
+  endpoint: "https://formspree.io/f/mvkpaove",
+  },
 
   nav: [
     { label: "Inicio", href: "#inicio" },
